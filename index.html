@@ -1,392 +1,528 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Garrv Sipani — Google Scholar Profile</title>
-  <meta name="description" content="Google Scholar profile of Garrv Sipani — researcher in quantum-enhanced AI, cybersecurity, and post-quantum cryptography at Johns Hopkins University.">
-  <meta property="og:title" content="Garrv Sipani | Researcher — Quantum AI & Cybersecurity">
-  <meta property="og:description" content="Published researcher in quantum computing, AI-driven intrusion detection, and post-quantum cryptography. MS Cybersecurity candidate at Johns Hopkins.">
+  <title>Garrv Sipani — Quantum AI Researcher</title>
+  <meta name="description" content="Garrv Sipani — Researcher in quantum-enhanced AI, cybersecurity, and post-quantum cryptography at Johns Hopkins University.">
+  <meta property="og:title" content="Garrv Sipani | Quantum AI & Cybersecurity Researcher">
+  <meta property="og:description" content="Published IEEE researcher. Quantum-classical hybrid security. Johns Hopkins MS Cybersecurity.">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <!-- JSON-LD structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Garrv Sipani",
-    "jobTitle": "Researcher, Quantum-AI & Cybersecurity",
-    "affiliation": { "@type": "Organization", "name": "Johns Hopkins University" },
-    "email": "garrvsipani@gmail.com",
-    "url": "https://linkedin.com/in/garrv-sipani-a05746311"
-  }
-  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="site-header" id="site-header">
-    <div class="header-inner">
-      <a href="#" class="logo" aria-label="Garrv Sipani Scholar Profile">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <rect width="32" height="32" rx="8" fill="currentColor" class="logo-bg"/>
-          <path d="M8 22 L16 10 L24 22" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M11.5 18 h9" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-          <circle cx="22" cy="22" r="3" fill="white"/>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursor-trail"></div>
+
+  <!-- NOISE OVERLAY -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-label="GS logo">
+          <rect width="28" height="28" rx="6" fill="url(#logo-grad)"/>
+          <defs>
+            <linearGradient id="logo-grad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00d4ff"/>
+              <stop offset="100%" stop-color="#7b2fff"/>
+            </linearGradient>
+          </defs>
+          <text x="14" y="19" text-anchor="middle" fill="white" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="700">GS</text>
         </svg>
-        <span class="logo-text">Scholar</span>
+        <span>Garrv Sipani</span>
       </a>
-      <nav class="site-nav" aria-label="Page navigation">
-        <a href="#publications">Publications</a>
+      <div class="nav-links">
+        <a href="#publications">Research</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
-      </nav>
-      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <a href="mailto:garrvsipani@gmail.com" class="nav-cta">Contact</a>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
       </button>
     </div>
-  </header>
+  </nav>
 
-  <main>
-    <!-- HERO / PROFILE -->
-    <section class="profile-hero" id="about">
-      <div class="container">
-        <div class="profile-grid">
-          <div class="profile-avatar-col">
-            <div class="avatar-ring">
-              <div class="avatar-initials">GS</div>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <canvas class="hero-canvas" id="hero-canvas"></canvas>
+
+    <!-- Quantum circuit SVG background -->
+    <svg class="circuit-bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <!-- Horizontal lines -->
+      <line x1="0" y1="200" x2="1200" y2="200" stroke="rgba(0,212,255,0.08)" stroke-width="1"/>
+      <line x1="0" y1="400" x2="1200" y2="400" stroke="rgba(0,212,255,0.06)" stroke-width="1"/>
+      <line x1="0" y1="600" x2="1200" y2="600" stroke="rgba(0,212,255,0.08)" stroke-width="1"/>
+      <!-- Vertical lines -->
+      <line x1="200" y1="0" x2="200" y2="800" stroke="rgba(123,47,255,0.06)" stroke-width="1"/>
+      <line x1="500" y1="0" x2="500" y2="800" stroke="rgba(123,47,255,0.06)" stroke-width="1"/>
+      <line x1="800" y1="0" x2="800" y2="800" stroke="rgba(123,47,255,0.06)" stroke-width="1"/>
+      <line x1="1100" y1="0" x2="1100" y2="800" stroke="rgba(123,47,255,0.06)" stroke-width="1"/>
+      <!-- Gate nodes -->
+      <circle cx="200" cy="200" r="5" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1.5" class="node-pulse"/>
+      <circle cx="500" cy="400" r="5" fill="none" stroke="rgba(123,47,255,0.3)" stroke-width="1.5" class="node-pulse" style="animation-delay:0.5s"/>
+      <circle cx="800" cy="200" r="5" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1.5" class="node-pulse" style="animation-delay:1s"/>
+      <circle cx="1100" cy="600" r="5" fill="none" stroke="rgba(123,47,255,0.3)" stroke-width="1.5" class="node-pulse" style="animation-delay:1.5s"/>
+      <circle cx="200" cy="600" r="5" fill="none" stroke="rgba(0,212,255,0.25)" stroke-width="1.5" class="node-pulse" style="animation-delay:0.8s"/>
+      <circle cx="800" cy="600" r="5" fill="none" stroke="rgba(123,47,255,0.25)" stroke-width="1.5" class="node-pulse" style="animation-delay:1.3s"/>
+      <!-- Gate boxes -->
+      <rect x="480" y="183" width="40" height="34" rx="4" fill="none" stroke="rgba(0,212,255,0.25)" stroke-width="1"/>
+      <text x="500" y="205" text-anchor="middle" fill="rgba(0,212,255,0.5)" font-family="Space Mono, monospace" font-size="10">H</text>
+      <rect x="780" y="183" width="40" height="34" rx="4" fill="none" stroke="rgba(123,47,255,0.25)" stroke-width="1"/>
+      <text x="800" y="205" text-anchor="middle" fill="rgba(123,47,255,0.5)" font-family="Space Mono, monospace" font-size="10">CNOT</text>
+      <rect x="180" y="383" width="40" height="34" rx="4" fill="none" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+      <text x="200" y="405" text-anchor="middle" fill="rgba(0,212,255,0.4)" font-family="Space Mono, monospace" font-size="10">X</text>
+      <!-- Data flow dots -->
+      <circle r="3" fill="rgba(0,212,255,0.6)" class="data-flow">
+        <animateMotion dur="4s" repeatCount="indefinite" path="M0,200 L1200,200"/>
+      </circle>
+      <circle r="2.5" fill="rgba(123,47,255,0.5)" class="data-flow">
+        <animateMotion dur="6s" repeatCount="indefinite" begin="1s" path="M1200,400 L0,400"/>
+      </circle>
+      <circle r="2" fill="rgba(0,212,255,0.4)" class="data-flow">
+        <animateMotion dur="5s" repeatCount="indefinite" begin="2s" path="M0,600 L1200,600"/>
+      </circle>
+    </svg>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for Research Collaborations
+      </div>
+
+      <h1 class="hero-name">
+        <span class="hero-name-line" data-text="Garrv">Garrv</span>
+        <span class="hero-name-line gradient-text" data-text="Sipani">Sipani</span>
+      </h1>
+
+      <div class="hero-title-row">
+        <span class="hero-title-text">Quantum AI</span>
+        <span class="hero-title-sep">×</span>
+        <span class="hero-title-text">Cybersecurity</span>
+        <span class="hero-title-sep">×</span>
+        <span class="hero-title-text">Deep Learning</span>
+      </div>
+
+      <p class="hero-desc">
+        Researcher at <span class="highlight">Johns Hopkins University</span> pushing the boundaries of quantum-classical hybrid security systems, adversarial machine learning, and post-quantum cryptography.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#publications" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          View Research
+        </a>
+        <a href="#projects" class="btn-secondary">
+          Explore Projects
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="2">0</span>
+          <span class="hero-stat-label">Publications</span>
+        </div>
+        <div class="hero-stat-div"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="7">0</span>
+          <span class="hero-stat-label">Projects</span>
+        </div>
+        <div class="hero-stat-div"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="4" data-suffix="+">0</span>
+          <span class="hero-stat-label">Years Research</span>
+        </div>
+        <div class="hero-stat-div"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="96" data-suffix=".7%">0</span>
+          <span class="hero-stat-label">Model Accuracy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="section pub-section" id="publications">
+    <div class="container">
+      <div class="section-label">
+        <span class="label-line"></span>
+        <span class="label-text">01 / Research</span>
+      </div>
+      <h2 class="section-heading">Published <span class="gradient-text">Work</span></h2>
+
+      <div class="pub-grid">
+
+        <!-- IEEE Paper -->
+        <article class="pub-card pub-featured reveal">
+          <div class="pub-card-glow"></div>
+          <div class="pub-card-inner">
+            <div class="pub-top">
+              <div class="pub-tags">
+                <span class="tag tag-ieee">IEEE · 2026</span>
+                <span class="tag tag-peer">Peer-Reviewed</span>
+                <span class="tag tag-first">First Author</span>
+              </div>
+              <a href="https://ieeexplore.ieee.org/document/11393885" target="_blank" rel="noopener" class="pub-ext-link" aria-label="Open IEEE paper">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
             </div>
-            <div class="profile-stats">
-              <div class="stat-item">
-                <span class="stat-number">2</span>
-                <span class="stat-label">Publications</span>
+            <h3 class="pub-title">Quantum Computing: An Emerging or Immediate Threat to Classical AI-Based Security Systems?</h3>
+            <p class="pub-venue">IEEE Xplore · February 2026</p>
+            <p class="pub-abstract">Examines the potential impact of quantum computing on classical AI-based cybersecurity systems. Investigates how quantum computational capabilities may challenge existing AI-driven security models, assesses vulnerabilities in current defenses, and outlines strategies for integrating quantum-resilient approaches into future cybersecurity architectures.</p>
+            <div class="pub-footer">
+              <div class="pub-author-chips">
+                <span class="author-chip author-me">Garrv Sipani</span>
               </div>
-              <div class="stat-divider"></div>
-              <div class="stat-item">
-                <span class="stat-number">7</span>
-                <span class="stat-label">Projects</span>
-              </div>
-              <div class="stat-divider"></div>
-              <div class="stat-item">
-                <span class="stat-number">4+</span>
-                <span class="stat-label">Years Research</span>
-              </div>
+              <a href="https://ieeexplore.ieee.org/document/11393885" target="_blank" rel="noopener" class="pub-link">
+                IEEE Xplore →
+              </a>
             </div>
           </div>
+        </article>
 
-          <div class="profile-info">
-            <div class="profile-meta-top">
-              <span class="affiliation-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-                Johns Hopkins University
-              </span>
-            </div>
-            <h1 class="profile-name">Garrv Sipani</h1>
-            <p class="profile-title">Researcher · Quantum-Enhanced AI &amp; Cybersecurity</p>
-            <p class="profile-bio">
-              Researcher with 4+ years in cybersecurity and quantum-enhanced AI, specializing in quantum-classical hybrid security architectures, deep learning-based intrusion detection, and post-quantum cryptography. Currently pursuing an MS in Cybersecurity at Johns Hopkins Whiting School of Engineering and serving as Teaching Assistant for graduate-level ethical hacking.
-            </p>
-            <div class="profile-interests">
-              <span class="interest-tag">Quantum Computing</span>
-              <span class="interest-tag">Intrusion Detection</span>
-              <span class="interest-tag">Post-Quantum Cryptography</span>
-              <span class="interest-tag">Deep Learning</span>
-              <span class="interest-tag">Adversarial ML</span>
-              <span class="interest-tag">IoT Security</span>
-            </div>
-            <div class="profile-links">
-              <a href="mailto:garrvsipani@gmail.com" class="profile-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-                garrvsipani@gmail.com
+        <!-- arXiv Paper -->
+        <article class="pub-card reveal" style="animation-delay:0.15s">
+          <div class="pub-card-glow pub-card-glow--purple"></div>
+          <div class="pub-card-inner">
+            <div class="pub-top">
+              <div class="pub-tags">
+                <span class="tag tag-arxiv">arXiv · 2025</span>
+                <span class="tag tag-preprint">Preprint</span>
+              </div>
+              <a href="https://arxiv.org/abs/2507.00403" target="_blank" rel="noopener" class="pub-ext-link" aria-label="Open arXiv paper">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
-              <a href="https://linkedin.com/in/garrv-sipani-a05746311" class="profile-link" target="_blank" rel="noopener">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                LinkedIn
+            </div>
+            <h3 class="pub-title">Quantum Bayesian Inference with Support Vector States for Intrusion Detection</h3>
+            <p class="pub-venue">arXiv:2507.00403 [quant-ph] · Cornell University · July 2025</p>
+            <p class="pub-abstract">A quantum Bayesian inference method for intrusion detection using explicitly constructed quantum circuits. Prior and conditional probabilities encoded via unitary gates; posterior distributions extracted through symbolic post-selection — demonstrating quantum-native inference for information security applications.</p>
+            <div class="pub-footer">
+              <div class="pub-author-chips">
+                <span class="author-chip">N. Mridha</span>
+                <span class="author-chip author-me">G. Sipani</span>
+                <span class="author-chip">E. Gaarder</span>
+                <span class="author-chip">+5</span>
+              </div>
+              <a href="https://arxiv.org/abs/2507.00403" target="_blank" rel="noopener" class="pub-link">
+                arXiv →
               </a>
-              <a href="https://github.com/garrv105" class="profile-link" target="_blank" rel="noopener">
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section projects-section" id="projects">
+    <div class="container">
+      <div class="section-label">
+        <span class="label-line"></span>
+        <span class="label-text">02 / Projects</span>
+      </div>
+      <h2 class="section-heading">Open-Source <span class="gradient-text">Arsenal</span></h2>
+
+      <div class="projects-grid">
+
+        <article class="proj-card proj-large reveal" style="animation-delay:0s">
+          <div class="proj-card-bg" style="--proj-hue: 190deg"></div>
+          <div class="proj-card-inner">
+            <div class="proj-top">
+              <div class="proj-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <a href="https://github.com/garrv105/quantumshield" target="_blank" rel="noopener" class="proj-github">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
                 GitHub
               </a>
             </div>
+            <h3 class="proj-title">QuantumShield</h3>
+            <p class="proj-subtitle">Post-Quantum Cryptography Framework</p>
+            <p class="proj-desc">Advanced post-quantum cryptographic implementation providing resistance against quantum threats. Integrates lattice-based, hash-based, and multivariate polynomial cryptographic algorithms with practical enterprise deployment frameworks.</p>
+            <div class="proj-chips">
+              <span class="chip">Lattice Crypto</span>
+              <span class="chip">Post-Quantum</span>
+              <span class="chip">Enterprise</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal" style="animation-delay:0.1s">
+          <div class="proj-card-bg" style="--proj-hue: 260deg"></div>
+          <div class="proj-card-inner">
+            <div class="proj-top">
+              <div class="proj-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <a href="https://github.com/garrv105/ai-threat-hunter" target="_blank" rel="noopener" class="proj-github">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                GitHub
+              </a>
+            </div>
+            <h3 class="proj-title">AI Threat Hunter</h3>
+            <p class="proj-subtitle">Deep Learning Intrusion Detection</p>
+            <p class="proj-desc">96.7% accuracy ensemble system combining LSTM + attention, CNN, and Isolation Forest. Zero-day detection with sub-100ms latency.</p>
+            <div class="proj-chips">
+              <span class="chip chip-accent">96.7% Acc.</span>
+              <span class="chip">LSTM</span>
+              <span class="chip">CNN</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal" style="animation-delay:0.2s">
+          <div class="proj-card-bg" style="--proj-hue: 170deg"></div>
+          <div class="proj-card-inner">
+            <div class="proj-top">
+              <div class="proj-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+              </div>
+              <a href="https://github.com/garrv105/quantum-iot-security" target="_blank" rel="noopener" class="proj-github">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                GitHub
+              </a>
+            </div>
+            <h3 class="proj-title">Quantum IoT Security</h3>
+            <p class="proj-subtitle">Quantum-Enhanced Incident Response</p>
+            <p class="proj-desc">Real-time quantum threat assessment for distributed IoT architectures. Addresses scalability in quantum-classical hybrid systems.</p>
+            <div class="proj-chips">
+              <span class="chip">Qiskit</span>
+              <span class="chip">IoT</span>
+              <span class="chip">Real-time</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal" style="animation-delay:0.1s">
+          <div class="proj-card-bg" style="--proj-hue: 300deg"></div>
+          <div class="proj-card-inner">
+            <div class="proj-top">
+              <div class="proj-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <a href="https://github.com/garrv105/neurosync-medical-device" target="_blank" rel="noopener" class="proj-github">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                GitHub
+              </a>
+            </div>
+            <h3 class="proj-title">Neurosync</h3>
+            <p class="proj-subtitle">Medical Device Security Research</p>
+            <p class="proj-desc">Security frameworks for neural interface protection and secure signal processing in high-risk biomedical environments.</p>
+            <div class="proj-chips">
+              <span class="chip">Neural Interface</span>
+              <span class="chip">Biomedical</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal" style="animation-delay:0.2s">
+          <div class="proj-card-bg" style="--proj-hue: 220deg"></div>
+          <div class="proj-card-inner">
+            <div class="proj-top">
+              <div class="proj-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <a href="https://github.com/garrv105/quantum-crypto-toolkit" target="_blank" rel="noopener" class="proj-github">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                GitHub
+              </a>
+            </div>
+            <h3 class="proj-title">Quantum Crypto Toolkit</h3>
+            <p class="proj-subtitle">Open-Source Research Framework</p>
+            <p class="proj-desc">Comprehensive toolkit for implementing and evaluating quantum-resistant cryptographic algorithms. Built for academic researchers and security professionals.</p>
+            <div class="proj-chips">
+              <span class="chip">Open Source</span>
+              <span class="chip">Research</span>
+              <span class="chip">Post-Quantum</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal" style="animation-delay:0.3s">
+          <div class="proj-card-bg" style="--proj-hue: 140deg"></div>
+          <div class="proj-card-inner">
+            <div class="proj-top">
+              <div class="proj-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <span class="proj-status">Ongoing</span>
+            </div>
+            <h3 class="proj-title">Quantum-AI Cyber Defense</h3>
+            <p class="proj-subtitle">Next-Gen Defense Platform · Quaranta.io</p>
+            <p class="proj-desc">Proprietary quantum-enhanced platform combining quantum computing and deep learning for adaptive enterprise threat intelligence.</p>
+            <div class="proj-chips">
+              <span class="chip">Cirq</span>
+              <span class="chip">Qiskit</span>
+              <span class="chip">PyTorch</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / CV -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="section-label">
+        <span class="label-line"></span>
+        <span class="label-text">03 / About</span>
+      </div>
+      <h2 class="section-heading">The <span class="gradient-text">Researcher</span></h2>
+
+      <div class="about-grid">
+        <div class="about-left reveal">
+          <div class="about-avatar">
+            <div class="about-avatar-inner">GS</div>
+            <div class="about-avatar-ring"></div>
+          </div>
+          <p class="about-bio">
+            Researcher at the intersection of quantum computing and cybersecurity. I build systems that defend against tomorrow's threats — today. My work spans IEEE-published research, open-source tooling, and applied quantum algorithms using Cirq and Qiskit.
+          </p>
+          <p class="about-bio">
+            Currently serving as Teaching Assistant for graduate-level Secure Ethical Hacking at Johns Hopkins, mentoring the next generation of security researchers.
+          </p>
+          <div class="about-links">
+            <a href="mailto:garrvsipani@gmail.com" class="about-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              garrvsipani@gmail.com
+            </a>
+            <a href="https://linkedin.com/in/garrv-sipani-a05746311" target="_blank" rel="noopener" class="about-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href="https://github.com/garrv105" target="_blank" rel="noopener" class="about-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- PUBLICATIONS -->
-    <section class="section publications-section" id="publications">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Publications</h2>
-          <p class="section-subtitle">Peer-reviewed research and preprints in quantum AI security</p>
-        </div>
-
-        <div class="pub-list">
-
-          <!-- Publication 1 — IEEE -->
-          <article class="pub-card featured">
-            <div class="pub-badge">IEEE · 2026</div>
-            <div class="pub-content">
-              <div class="pub-venue-row">
-                <span class="pub-venue">IEEE Xplore</span>
-                <span class="pub-type">Peer-Reviewed</span>
+        <div class="about-right">
+          <!-- Timeline -->
+          <div class="timeline reveal" style="animation-delay:0.1s">
+            <h3 class="timeline-heading">Education</h3>
+            <div class="timeline-items">
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <p class="tl-year">2025 – 2026</p>
+                  <p class="tl-role">M.S. Cybersecurity</p>
+                  <p class="tl-org">Johns Hopkins Whiting School of Engineering</p>
+                </div>
               </div>
-              <h3 class="pub-title">
-                <a href="https://ieeexplore.ieee.org/document/11393885" target="_blank" rel="noopener">
-                  Quantum Computing: An Emerging or Immediate Threat to Classical AI-Based Security Systems?
-                </a>
-              </h3>
-              <p class="pub-authors">
-                <strong>Garrv Sipani</strong> (First Author)
-              </p>
-              <p class="pub-abstract">
-                Examines the potential impact of quantum computing on classical AI-based cybersecurity systems. Investigates how quantum computational capabilities may challenge existing AI-driven security models, assesses vulnerabilities in current defenses, and outlines strategies for integrating quantum-resilient approaches into future cybersecurity architectures.
-              </p>
-              <div class="pub-meta">
-                <span class="pub-date">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  February 2026
-                </span>
-                <a href="https://ieeexplore.ieee.org/document/11393885" class="pub-doi-link" target="_blank" rel="noopener">
-                  View on IEEE Xplore →
-                </a>
+              <div class="tl-item">
+                <div class="tl-dot tl-dot--purple"></div>
+                <div class="tl-content">
+                  <p class="tl-year">2022 – 2024</p>
+                  <p class="tl-role">Bachelor of Cybersecurity</p>
+                  <p class="tl-org">Macquarie University, Sydney</p>
+                </div>
               </div>
             </div>
-          </article>
 
-          <!-- Publication 2 — arXiv -->
-          <article class="pub-card">
-            <div class="pub-badge">arXiv · 2025</div>
-            <div class="pub-content">
-              <div class="pub-venue-row">
-                <span class="pub-venue">arXiv · Cornell University (quant-ph)</span>
-                <span class="pub-type">Preprint</span>
+            <h3 class="timeline-heading" style="margin-top:2rem">Experience</h3>
+            <div class="timeline-items">
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <p class="tl-year">2026 – Present</p>
+                  <p class="tl-role">Teaching Assistant — Ethical Hacking</p>
+                  <p class="tl-org">Johns Hopkins University</p>
+                </div>
               </div>
-              <h3 class="pub-title">
-                <a href="https://arxiv.org/abs/2507.00403" target="_blank" rel="noopener">
-                  Quantum Bayesian Inference with Support Vector States for Intrusion Detection
-                </a>
-              </h3>
-              <p class="pub-authors">
-                Nayema Mridha, <strong>Garrv Sipani</strong>, Eva R Gaarder, Shah Haque, Radhika Kuttala, Binay P Akhouri, Mohamad M Al Zein, Eric Howard
-              </p>
-              <p class="pub-abstract">
-                A quantum Bayesian inference method for intrusion detection using explicitly constructed quantum circuits and statevector simulation. Prior and conditional probabilities are encoded via unitary gates, and posterior distributions are extracted through symbolic post-selection. Applied to scenarios with network spikes, system vulnerabilities, and false alarms, the method yields joint, marginal, and conditional probabilities aligned with causal structure — demonstrating feasibility and interpretability of quantum-native inference for information security.
-              </p>
-              <div class="pub-meta">
-                <span class="pub-date">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  July 2025
-                </span>
-                <a href="https://arxiv.org/abs/2507.00403" class="pub-doi-link" target="_blank" rel="noopener">
-                  arXiv:2507.00403 →
-                </a>
+              <div class="tl-item">
+                <div class="tl-dot tl-dot--purple"></div>
+                <div class="tl-content">
+                  <p class="tl-year">2023 – Present</p>
+                  <p class="tl-role">Head Cybersecurity Consultant</p>
+                  <p class="tl-org">Quaranta.io, Sydney</p>
+                </div>
               </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- OPEN SOURCE PROJECTS -->
-    <section class="section projects-section" id="projects">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Research Projects</h2>
-          <p class="section-subtitle">Open-source tools and ongoing research initiatives</p>
-        </div>
-
-        <div class="projects-grid">
-
-          <article class="project-card">
-            <div class="project-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">
-                <a href="https://github.com/garrv105/quantumshield" target="_blank" rel="noopener">QuantumShield</a>
-              </h3>
-              <p class="project-type">GitHub Open-Source · Post-Quantum Cryptography</p>
-              <p class="project-desc">Advanced post-quantum cryptographic implementation providing resistance against quantum threats. Integrates lattice-based, hash-based, and multivariate polynomial algorithms with enterprise deployment frameworks.</p>
-              <div class="project-tags">
-                <span class="tag">Lattice-based Crypto</span>
-                <span class="tag">Post-quantum</span>
-                <span class="tag">Enterprise</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">
-                <a href="https://github.com/garrv105/quantum-iot-security" target="_blank" rel="noopener">Quantum-Enhanced IoT Security</a>
-              </h3>
-              <p class="project-type">GitHub Research · Quantum-Classical Hybrid</p>
-              <p class="project-desc">Pioneering research developing quantum-enhanced techniques for real-time threat assessment and response in IoT environments. Addresses scalability challenges in quantum-classical hybrid systems for distributed IoT security architectures.</p>
-              <div class="project-tags">
-                <span class="tag">IoT Security</span>
-                <span class="tag">Quantum-Classical</span>
-                <span class="tag">Real-time</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">
-                <a href="https://github.com/garrv105/ai-threat-hunter" target="_blank" rel="noopener">AI-Powered Threat Detection</a>
-              </h3>
-              <p class="project-type">GitHub Open-Source · Deep Learning</p>
-              <p class="project-desc">State-of-the-art deep learning ensemble achieving 96.7% accuracy in real-time network intrusion detection. Combines LSTM with attention mechanisms, CNN, and Isolation Forest for multi-layer anomaly detection. Features zero-day attack detection with sub-100ms latency and 0.3% false positive rate.</p>
-              <div class="project-tags">
-                <span class="tag">LSTM</span>
-                <span class="tag">CNN</span>
-                <span class="tag">96.7% Accuracy</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">
-                <a href="https://github.com/garrv105/neurosync-medical-device" target="_blank" rel="noopener">Neurosync Medical Device Security</a>
-              </h3>
-              <p class="project-type">GitHub Research · Biomedical Security</p>
-              <p class="project-desc">Medical device security research focusing on neural interface protection and secure signal processing. Develops security frameworks for advanced biomedical devices in high-risk environments.</p>
-              <div class="project-tags">
-                <span class="tag">Neural Interface</span>
-                <span class="tag">Medical IoT</span>
-                <span class="tag">Signal Processing</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">
-                <a href="https://github.com/garrv105/quantum-crypto-toolkit" target="_blank" rel="noopener">Quantum Cryptography Toolkit</a>
-              </h3>
-              <p class="project-type">GitHub Open-Source · Cryptography Research</p>
-              <p class="project-desc">Comprehensive open-source toolkit implementing quantum-resistant cryptographic algorithms and post-quantum cryptography research frameworks. Enables academic researchers and security professionals to evaluate emerging quantum-safe cryptographic approaches.</p>
-              <div class="project-tags">
-                <span class="tag">Post-Quantum</span>
-                <span class="tag">Research Tool</span>
-                <span class="tag">Open Source</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title">Quantum-AI Cyber Defense Platform</h3>
-              <p class="project-type">Ongoing Research · Quaranta.io</p>
-              <p class="project-desc">Next-generation defense platform combining quantum computing and deep learning for adaptive threat intelligence. Developing proprietary quantum-enhanced methodologies integrating AI-powered tools for enterprise cybersecurity against emerging quantum threats.</p>
-              <div class="project-tags">
-                <span class="tag">Cirq</span>
-                <span class="tag">Qiskit</span>
-                <span class="tag">PyTorch</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- EDUCATION & AFFILIATIONS -->
-    <section class="section cv-section">
-      <div class="container">
-        <div class="cv-columns">
-
-          <div class="cv-col">
-            <h2 class="cv-heading">Education</h2>
-            <div class="cv-entry">
-              <div class="cv-entry-dot"></div>
-              <div class="cv-entry-content">
-                <p class="cv-institution">Johns Hopkins Whiting School of Engineering</p>
-                <p class="cv-degree">M.S. Cybersecurity</p>
-                <p class="cv-period">Jan 2025 – May 2026 (Expected) · Baltimore, MD</p>
-              </div>
-            </div>
-            <div class="cv-entry">
-              <div class="cv-entry-dot"></div>
-              <div class="cv-entry-content">
-                <p class="cv-institution">Macquarie University</p>
-                <p class="cv-degree">Bachelor of Cybersecurity</p>
-                <p class="cv-period">2022 – 2024 · Sydney, Australia</p>
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <p class="tl-year">2023 – 2025</p>
+                  <p class="tl-role">Cybersecurity Engineer</p>
+                  <p class="tl-org">Buzzpenny Systems LLP</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="cv-col">
-            <h2 class="cv-heading">Research Positions</h2>
-            <div class="cv-entry">
-              <div class="cv-entry-dot"></div>
-              <div class="cv-entry-content">
-                <p class="cv-institution">Johns Hopkins University</p>
-                <p class="cv-degree">Teaching Assistant — Secure Ethical Hacking</p>
-                <p class="cv-period">Jan 2026 – Present</p>
+          <!-- Skills -->
+          <div class="skills-panel reveal" style="animation-delay:0.2s">
+            <h3 class="timeline-heading">Core Stack</h3>
+            <div class="skill-bars">
+              <div class="skill-bar-item">
+                <span class="skill-bar-label">Quantum Algorithms (Cirq / Qiskit)</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:92%"></div></div>
               </div>
-            </div>
-            <div class="cv-entry">
-              <div class="cv-entry-dot"></div>
-              <div class="cv-entry-content">
-                <p class="cv-institution">Quaranta.io</p>
-                <p class="cv-degree">Head Cyber Security Consultant &amp; Research Lead</p>
-                <p class="cv-period">Feb 2023 – Present · Sydney, Australia</p>
+              <div class="skill-bar-item">
+                <span class="skill-bar-label">Deep Learning (PyTorch / TensorFlow)</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:90%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <span class="skill-bar-label">Python / Security Automation</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:95%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <span class="skill-bar-label">Penetration Testing / Threat Modeling</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:88%"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <span class="skill-bar-label">Post-Quantum Cryptography</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:87%"></div></div>
               </div>
             </div>
           </div>
-
-          <div class="cv-col">
-            <h2 class="cv-heading">Key Skills</h2>
-            <div class="skills-list">
-              <span class="skill-chip">Quantum Algorithms</span>
-              <span class="skill-chip">Deep Learning</span>
-              <span class="skill-chip">Python / PyTorch</span>
-              <span class="skill-chip">Cirq / Qiskit</span>
-              <span class="skill-chip">Manuscript Writing</span>
-              <span class="skill-chip">Scientific Communication</span>
-              <span class="skill-chip">Penetration Testing</span>
-              <span class="skill-chip">Linux Administration</span>
-              <span class="skill-chip">Threat Modeling</span>
-              <span class="skill-chip">Incident Response</span>
-            </div>
-          </div>
-
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
+  <!-- FOOTER / CONTACT -->
+  <footer class="footer">
+    <div class="footer-glow"></div>
     <div class="container footer-inner">
-      <p class="footer-name">Garrv Sipani</p>
-      <p class="footer-sub">Quantum AI &amp; Cybersecurity Researcher · Johns Hopkins University</p>
-      <div class="footer-links">
-        <a href="mailto:garrvsipani@gmail.com">garrvsipani@gmail.com</a>
-        <a href="https://linkedin.com/in/garrv-sipani-a05746311" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/garrv105" target="_blank" rel="noopener">GitHub</a>
+      <div class="footer-cta">
+        <p class="footer-cta-label">Want to collaborate?</p>
+        <h2 class="footer-cta-heading">Let's build the <span class="gradient-text">quantum future</span></h2>
+        <a href="mailto:garrvsipani@gmail.com" class="btn-primary btn-large">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          Get In Touch
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Garrv Sipani · Johns Hopkins University</p>
+        <div class="footer-socials">
+          <a href="https://linkedin.com/in/garrv-sipani-a05746311" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://github.com/garrv105" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="https://ieeexplore.ieee.org/document/11393885" target="_blank" rel="noopener" aria-label="IEEE">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </footer>
